@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace TicTacToe
 {
@@ -28,6 +28,7 @@ namespace TicTacToe
         {
             int size = board.GetLength(0);
             bool gameOver = false;
+            bool isDraw = false;
 
             for (int i = 1; i <= size * size && !gameOver; i++)
             {
@@ -36,6 +37,25 @@ namespace TicTacToe
                 int player = i % 2 == 0 ? 2 : 1;
                 Console.WriteLine($"Player {player}'s Turn: Choose Field: ");
                 gameOver = HandleInput(board, player);
+
+                if (i == size * size && !gameOver)
+                {
+                    isDraw = true;
+                    break;
+                }
+            }
+
+            Console.Clear();
+            PrintBoard(board);
+
+            if (isDraw)
+            {
+                Console.WriteLine("It's a draw!");
+            }
+            else if (gameOver)
+            {
+                int winner = (size * size) % 2 == 0 ? 1 : 2;
+                Console.WriteLine($"Player {winner} wins!");
             }
         }
 
@@ -86,6 +106,7 @@ namespace TicTacToe
             }
             return false;
         }
+
 
 
         // Checks if there is a winner
